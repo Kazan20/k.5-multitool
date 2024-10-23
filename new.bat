@@ -16,7 +16,7 @@ echo [38;5;46m               ║              4. Winget             ║[0m
 echo [38;5;46m               ║              5. Nushell            ║[0m 
 echo [38;5;46m               ║              6. Credits            ║[0m
 echo [38;5;46m               ║              7. Exit               ║[0m
-echo [38;5;160m               ║              8. Night Project      ║[0m
+echo [38;5;160m               ║              8. Dark side          ║[0m
 echo [38;5;46m               ╚════════════════════════════════════╝[0m
 echo.
 set /p input=.%BS% [38;5;46m             ╚══════^>[0m
@@ -507,7 +507,6 @@ echo --------------
 echo 4. EXIT
 
 echo --------------
-
 echo.
 
 set /p "a=Choice: "
@@ -608,15 +607,20 @@ pause >nul
 
 goto home
 
-:pass
 
+
+:pass
 call %kusr%.bat
 
-set /p "pass=Password: "
+rem Use PowerShell to mask password input with • symbol
+echo After the password click enter to go to the Next section
+for /f "delims=" %%p in ('powershell -Command "$Password = ''; while ($true) { $key = Read-Host -AsSecureString -Prompt 'Enter Password'; if ([char]::IsControl([char][Console]::ReadKey($true).KeyChar)) {break}; $Password += '•'; Write-Host -NoNewline '•'}; [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($key))"') do set "pass=%%p"
 
-if ["%pass%"] == ["%apass%"] goto logingood
+rem Check password
+if ["%pass%"] == ["%apass%"] goto MenTool
 
 goto passinvalid
+
 
 :passinvalid
 
@@ -632,17 +636,7 @@ goto login
 
 :logingood
 
-color a
-
-cls
-
-echo You have Successfully logged in %kusr%
-
-echo Redirect to home page echo Thank you for using the login system
-
-echo coded by Blookz!
-
-goto Main
+goto MenTool
 
 :delaccount
 
@@ -749,6 +743,73 @@ echo USERNAME doesn't exist.
 pause >nul
 
 goto delaccount
+goto:eof
+
+:house
+cls
+echo --------------------------
+echo   Welcome %kusr% to home
+echo --------------------------
+echo 1. go to START 
+echo 2. Mentool
+echo 3. Exit the whole tool
+echo 4. Login Home
+echo 5. play chill music
+
+<nul set /p "=%pink%┌%pink%─%light_purple%─%medium_purple%─%dark_purple%(%medium_purple%load@%kusr%)%reset%-[tool] "
+<nul set /p "= %light_purple%(step1)%reset% "
+<nul set /p "= %medium_purple%(step2)%reset% "
+<nul set /p "= %dark_purple%(step3)%reset% "
+echo.
+<nul set /p "=└─#> "
+set /p pics1=
+
+if ["%pics1%"] == ["1"] goto START
+
+if ["%pics1%"] == ["2"] goto MenTool
+
+if ["%pics1%"] == ["3"] exit
+
+if ["%pics1%"] == ["4"] goto home
+
+if ["%pics1%"] == ["5"] start C:\Users\User\Music\lofi-study-music.mp3
+
+:MenTool
+cls
+echo Welcome %kusr%
+echo                  ╔═══════════════════════╗
+echo                  ║       1.Night Tools   ║ 
+echo                  ║                       ║ 
+echo                  ║       2.Cyb3r Tools   ║ 
+echo                  ║                       ║ 
+echo                  ║       3.Raptor Tools  ║ 
+echo                  ║                       ║ 
+echo                 ╔╝        4.house       ╔╝        
+echo                 ╚═══════════════════════╝
+
+set "pink=[38;2;255;182;193m"
+set "light_purple=[38;2;255;105;180m"
+set "medium_purple=[38;2;218;112;214m"
+set "dark_purple=[38;2;128;0;128m"
+set "reset=[0m"
+
+<nul set /p "=%pink%┌%pink%─%light_purple%─%medium_purple%─%dark_purple%(%medium_purple%load@%kusr%)%reset%-[tool] "
+<nul set /p "= %light_purple%(step1)%reset% "
+<nul set /p "= %medium_purple%(step2)%reset% "
+<nul set /p "= %dark_purple%(step3)%reset% "
+echo.
+<nul set /p "=└─#> "
+set /p pics=
+
+
+if ["%pics%"] == ["1"] goto Main
+
+if ["%pics%"] == ["2"] goto Cyb3r
+
+if ["%pics%"] == ["3"] goto Raptor
+
+if ["%pics%"] == ["4"] goto house
+
 
 :Main
 cls
@@ -793,7 +854,7 @@ if %picks% == 15 goto exploweb
 if %picks% == Next goto Main2
 if %picks% == next goto Main2
 if %picks% == 99 goto credits
-if %picks% == Exit goto START
+if %picks% == Exit goto MenTool
 echo Wrong...
 timeout 3 >nul
 goto Main
@@ -1700,3 +1761,9 @@ Title Website Crasher
 ping %input% -t -l %input-attemps%
 
 goto:eof
+
+:Cyb3r
+python C:/Users/User/Cyb3rtech-Tool/cyb3rtech.py
+
+:Raptor
+python C:\Users\%USERPROFILE%\Documents\Raptor.py
